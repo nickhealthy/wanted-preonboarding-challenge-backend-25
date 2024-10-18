@@ -1,8 +1,10 @@
 package com.wanted.clone.oneport.payments.infrastructure.pg.toss;
 
 import com.wanted.clone.oneport.payments.application.port.out.pg.PgWidget;
+import org.springframework.stereotype.Component;
 
-public class TossPgWidget extends PgWidget {
+@Component
+public class TossWidget implements PgWidget {
     @Override
     public String checkout() {
         return "toss/checkout";

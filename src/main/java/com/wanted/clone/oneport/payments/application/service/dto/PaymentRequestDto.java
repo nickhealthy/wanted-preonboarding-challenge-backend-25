@@ -2,7 +2,6 @@ package com.wanted.clone.oneport.payments.application.service.dto;
 
 import com.wanted.clone.oneport.payments.representation.web.request.PgCorp;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Getter
 public class PaymentRequestDto {
