@@ -2,7 +2,7 @@ package com.wanted.clone.oneport.payments.representation.web;
 
 import com.wanted.clone.oneport.payments.application.service.dto.PaymentRequestDto;
 import com.wanted.clone.oneport.payments.representation.port.in.*;
-import com.wanted.clone.oneport.payments.representation.web.request.*;
+import com.wanted.clone.oneport.payments.representation.web.request.payment.PaymentApproveMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

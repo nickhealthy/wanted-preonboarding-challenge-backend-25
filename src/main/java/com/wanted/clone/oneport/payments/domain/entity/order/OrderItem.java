@@ -1,10 +1,7 @@
 package com.wanted.clone.oneport.payments.domain.entity.order;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.UUID;
 
@@ -15,13 +12,10 @@ import java.util.UUID;
 @Getter
 @AllArgsConstructor
 public class OrderItem {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @EmbeddedId
+    private PurchaseOrderId id;
 
-    @Column(name = "item_idx")
-    private int itemIdx;
-
+    @MapsId("orderId")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private Order order;

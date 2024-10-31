@@ -17,9 +17,8 @@ import java.util.UUID;
 @Getter
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "order_id", columnDefinition = "BINARY(16)")
-    private UUID orderId;
+    @Column(name = "order_id")
+    private String orderId;
 
     private String name;
 
@@ -43,15 +42,12 @@ public class Order {
     }
 
     @Builder
-    public Order(String name, String phoneNumber, List<OrderItem> items) throws Exception {
+    public Order(String orderId, String name, String phoneNumber, List<OrderItem> items) throws Exception {
+        this.orderId = orderId;
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.status = OrderStatus.ORDER_COMPLETED;
         this.items = items;
-    }
-
-    public static UUID generateOrderId() {
-        return UUID.randomUUID();
     }
 
     public void orderPaymentFullFill(String paymentKey) {
@@ -71,8 +67,8 @@ public class Order {
     }
 
     private void orderCancelBy(int itemIdx) {
-        this.items.stream().filter(orderItem -> orderItem.getItemIdx() == itemIdx)
-            .forEach(item -> item.update(OrderStatus.ORDER_CANCELLED));
+//        this.items.stream().filter(orderItem -> orderItem.getItemIdx() == itemIdx)
+//            .forEach(item -> item.update(OrderStatus.ORDER_CANCELLED));
     }
 
     public static boolean verifyHaveAtLeastOneItem(List<OrderItem> items) {

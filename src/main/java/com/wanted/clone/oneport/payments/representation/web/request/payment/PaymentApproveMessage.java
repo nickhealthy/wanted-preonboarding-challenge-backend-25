@@ -1,9 +1,8 @@
-package com.wanted.clone.oneport.payments.representation.web.request;
+package com.wanted.clone.oneport.payments.representation.web.request.payment;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Getter
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)

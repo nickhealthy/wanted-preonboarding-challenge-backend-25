@@ -7,14 +7,14 @@ GRANT all privileges ON `wanted_preonboarding`.* TO `wanted`@`%`;
 
 CREATE TABLE `purchase_order`
 (
-    `order_id`     BINARY(16) default (uuid_to_bin(uuid())) NOT NULL COMMENT '주문번호',
-    `name`         VARCHAR(255)                             NOT NULL COMMENT '주문자명',
-    `phone_number` VARCHAR(255)                             NOT NULL COMMENT '주문자 휴대전화번호',
-    `order_state`  VARCHAR(255)                             NOT NULL COMMENT '주문상태',
-    `payment_id`   VARCHAR(255)                             NULL COMMENT '결제정보',
-    `total_price`  INT                                      NOT NULL COMMENT '상품 가격 * 주문 수량',
-    `created_at`   DATETIME   DEFAULT NOW()                 NOT NULL,
-    `updated_at`   DATETIME   DEFAULT NOW()                 NOT NUll,
+    `order_id`     VARCHAR(255)           NOT NULL COMMENT '주문번호',
+    `name`         VARCHAR(255)           NOT NULL COMMENT '주문자명',
+    `phone_number` VARCHAR(255)           NOT NULL COMMENT '주문자 휴대전화번호',
+    `order_state`  VARCHAR(255)           NOT NULL COMMENT '주문상태',
+    `payment_id`   VARCHAR(255)           NULL COMMENT '결제정보',
+    `total_price`  INT                    NOT NULL COMMENT '상품 가격 * 주문 수량',
+    `created_at`   DATETIME DEFAULT NOW() NOT NULL,
+    `updated_at`   DATETIME DEFAULT NOW() NOT NUll,
     PRIMARY KEY (order_id)
 );
 
@@ -45,7 +45,7 @@ CREATE TABLE `payment_transaction`
     `total_amount`    INT                    NOT NULL COMMENT '최종 결제 금액(즉시 할인 금액 포함)',
     `balance_amount`  INT                    NOT NULL COMMENT '취소 가능한 금액(잔고)',
     `canceled_amount` INT                    NOT NULL COMMENT '취소된 총 금액',
-    `pay_out_amount`  INT      DEFAULT 0     NULL COMMENT     '정산 금액(지급액)',
+    `pay_out_amount`  INT      DEFAULT 0     NULL COMMENT '정산 금액(지급액)',
     `created_at`      DATETIME DEFAULT NOW() NOT NULL,
     `updated_at`      DATETIME DEFAULT NOW() NOT NUll,
     PRIMARY KEY (id),
