@@ -1,9 +1,9 @@
-package com.wanted.clone.oneport.payments.representation.web.response;
+package com.wanted.clone.oneport.payments.presentation.web.response;
 
 import com.wanted.clone.oneport.payments.domain.entity.order.Order;
 import com.wanted.clone.oneport.payments.domain.entity.order.OrderItem;
 import com.wanted.clone.oneport.payments.domain.entity.order.OrderStatus;
-import com.wanted.clone.oneport.payments.representation.web.request.order.Orderer;
+import com.wanted.clone.oneport.payments.presentation.web.request.order.Orderer;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 

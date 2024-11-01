@@ -1,8 +1,8 @@
-package com.wanted.clone.oneport.payments.representation.web;
+package com.wanted.clone.oneport.payments.presentation.web;
 
-import com.wanted.clone.oneport.payments.application.service.dto.PaymentRequestDto;
-import com.wanted.clone.oneport.payments.representation.port.in.*;
-import com.wanted.clone.oneport.payments.representation.web.request.payment.PaymentApproveMessage;
+import com.wanted.clone.oneport.payments.application.service.dto.PaymentRequest;
+import com.wanted.clone.oneport.payments.presentation.port.in.*;
+import com.wanted.clone.oneport.payments.presentation.web.request.payment.PaymentApproveMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -29,7 +29,7 @@ public class PaymentController {
         model.addAttribute("ordererPhoneNumber", ordererPhoneNumber);
         model.addAttribute("userId", userId);
         model.addAttribute("amount", amount);
-        return paymentCommonUseCase.renderPgUi(PaymentRequestDto.of(pgCorpName), "checkout");
+        return paymentCommonUseCase.renderPgUi(PaymentRequest.of(pgCorpName), "checkout");
     }
 
     @GetMapping("success")
@@ -39,13 +39,13 @@ public class PaymentController {
                                   @RequestParam(value = "amount") String amount,
                                   @RequestParam(value = "pgCorpName") String pgCorpName
     ) throws Exception {
-        return paymentCommonUseCase.renderPgUi(PaymentRequestDto.of(pgCorpName), "success");
+        return paymentCommonUseCase.renderPgUi(PaymentRequest.of(pgCorpName), "success");
     }
 
     @GetMapping("fail")
     public String paymentFail(@RequestParam(value = "message") String message,
                               @RequestParam(value = "message") String pgCorpName) throws Exception {
-        return paymentCommonUseCase.renderPgUi(PaymentRequestDto.of(pgCorpName), "fail");
+        return paymentCommonUseCase.renderPgUi(PaymentRequest.of(pgCorpName), "fail");
     }
 
     @PostMapping("confirm")

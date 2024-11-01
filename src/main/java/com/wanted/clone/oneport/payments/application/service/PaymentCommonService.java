@@ -1,8 +1,8 @@
 package com.wanted.clone.oneport.payments.application.service;
 
 import com.wanted.clone.oneport.payments.application.port.out.pg.PgWidget;
-import com.wanted.clone.oneport.payments.application.service.dto.PaymentRequestDto;
-import com.wanted.clone.oneport.payments.representation.port.in.PaymentCommonUseCase;
+import com.wanted.clone.oneport.payments.application.service.dto.PaymentRequest;
+import com.wanted.clone.oneport.payments.presentation.port.in.PaymentCommonUseCase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,8 +26,8 @@ public class PaymentCommonService implements PaymentCommonUseCase {
     }
 
     @Override
-    public String renderPgUi(PaymentRequestDto paymentRequestDto, String pageType) throws Exception {
-        String pgCorpName = Optional.ofNullable(paymentRequestDto.getPgCorpName())
+    public String renderPgUi(PaymentRequest paymentRequest, String pageType) throws Exception {
+        String pgCorpName = Optional.ofNullable(paymentRequest.getPgCorpName())
                 .orElseThrow(() -> new IllegalArgumentException("PG Corp Name cannot be null"))
                 .toLowerCase();
 

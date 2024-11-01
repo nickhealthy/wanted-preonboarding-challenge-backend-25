@@ -1,4 +1,4 @@
-package com.wanted.clone.oneport.payments.representation.web.request.order;
+package com.wanted.clone.oneport.payments.presentation.web.request.order;
 
 import com.wanted.clone.oneport.core.common.IdGenerator;
 import com.wanted.clone.oneport.payments.domain.entity.order.*;
@@ -43,7 +43,7 @@ public class PurchaseOrder {
 
     public Order toEntity() throws Exception {
         Order o = Order.builder()
-                .orderId(IdGenerator.generateId())
+                .orderId(IdGenerator.generateId(14))
                 .items(new ArrayList<>())
                 .name(this.getOrderer().getName())
                 .phoneNumber(this.getOrderer().getPhoneNumber())

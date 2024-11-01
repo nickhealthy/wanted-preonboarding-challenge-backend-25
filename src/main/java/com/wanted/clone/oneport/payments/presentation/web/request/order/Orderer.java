@@ -1,4 +1,4 @@
-package com.wanted.clone.oneport.payments.representation.web.request.order;
+package com.wanted.clone.oneport.payments.presentation.web.request.order;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

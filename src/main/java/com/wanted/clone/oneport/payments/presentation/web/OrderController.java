@@ -1,10 +1,12 @@
-package com.wanted.clone.oneport.payments.representation.web;
+package com.wanted.clone.oneport.payments.presentation.web;
 
-import com.wanted.clone.oneport.payments.representation.port.in.CreateNewOrderUseCase;
-import com.wanted.clone.oneport.payments.representation.web.request.order.PurchaseOrder;
-import com.wanted.clone.oneport.payments.representation.web.response.RespNewPurchaseOrderMessage;
+import com.wanted.clone.oneport.payments.presentation.port.in.CreateNewOrderUseCase;
+import com.wanted.clone.oneport.payments.presentation.web.request.order.PurchaseOrder;
+import com.wanted.clone.oneport.payments.presentation.web.request.order.ReqNewOrder;
+import com.wanted.clone.oneport.payments.presentation.web.response.RespNewPurchaseOrderMessage;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -12,6 +14,7 @@ import java.util.*;
 @RestController
 @RequestMapping("/order")
 @RequiredArgsConstructor
+@Slf4j
 public class OrderController {
     private final CreateNewOrderUseCase createNewOrderUseCase;
 
@@ -20,8 +23,9 @@ public class OrderController {
         return RespNewPurchaseOrderMessage.from(createNewOrderUseCase.createOrder(newOrder));
     }
 
-    @GetMapping
-    public String test() throws Exception {
+    @PostMapping("/test")
+    public String test(@RequestBody @Valid ReqNewOrder newOrder) throws Exception {
+        log.info(newOrder.toString());
         return "test";
     }
 

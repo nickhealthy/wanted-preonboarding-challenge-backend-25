@@ -1,4 +1,4 @@
-package com.wanted.clone.oneport.payments.representation.web.request.payment;
+package com.wanted.clone.oneport.payments.presentation.web.request.payment;
 
 import lombok.Getter;
 

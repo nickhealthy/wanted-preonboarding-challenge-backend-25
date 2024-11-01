@@ -1,4 +1,4 @@
-package com.wanted.clone.oneport.payments.representation.web.response;
+package com.wanted.clone.oneport.payments.presentation.web.response;
 
 import com.wanted.clone.oneport.payments.domain.entity.order.OrderItem;
 import com.wanted.clone.oneport.payments.domain.entity.order.OrderStatus;
