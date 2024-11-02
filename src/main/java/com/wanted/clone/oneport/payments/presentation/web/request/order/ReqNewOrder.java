@@ -14,12 +14,9 @@ public class ReqNewOrder {
 
     @Valid
     @Size(min = 1)
-    private List<OrderedItem> newlyOrderedItems;
+    private List<OrderedItem> newlyOrderedItem;
 
     @Getter
-    @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
     public static class OrderedItem {
         @Min(1)
         private int itemIdx;

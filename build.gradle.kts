@@ -41,7 +41,7 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.10.0")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.10.0")
     implementation("com.google.code.gson:gson")
-    implementation("com.fasterxml.jackson.core:jackson-core:2.13.2")
+//    implementation("com.fasterxml.jackson.core:jackson-core:2.13.2")
 //    developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("com.mysql:mysql-connector-j")
     annotationProcessor("org.projectlombok:lombok")

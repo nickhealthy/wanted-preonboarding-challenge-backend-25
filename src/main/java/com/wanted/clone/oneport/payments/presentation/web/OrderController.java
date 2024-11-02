@@ -26,7 +26,7 @@ public class OrderController {
     @PostMapping("/test")
     public String test(@RequestBody @Valid ReqNewOrder newOrder) throws Exception {
         log.info(newOrder.toString());
-        return "test";
+        return "hello";
     }
 
     @GetMapping("info")
