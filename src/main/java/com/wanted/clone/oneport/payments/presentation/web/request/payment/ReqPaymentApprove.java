@@ -6,9 +6,9 @@ import lombok.Getter;
 
 @Getter
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class PaymentApproveMessage {
+public class ReqPaymentApprove {
     private String siteCode;
-    private int pgCorp;
+    private PgCorp selectedPgCorp;
     private String paymentKey;
     private String orderId;
     private int totalAmount;
@@ -16,7 +16,7 @@ public class PaymentApproveMessage {
     @Override
     public String toString(){
         return "PaymentApproveMessage [site_code=" + siteCode +
-                ", pg_corp=" + pgCorp +
+                ", pg_corp=" + selectedPgCorp.name() +
                 ", payment_key=" + paymentKey +
                 ", order_id=" + orderId +
                 ", total_amount=" + totalAmount +

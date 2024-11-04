@@ -2,7 +2,7 @@ package com.wanted.clone.oneport.payments.presentation.web;
 
 import com.wanted.clone.oneport.payments.application.service.dto.PaymentRequest;
 import com.wanted.clone.oneport.payments.presentation.port.in.*;
-import com.wanted.clone.oneport.payments.presentation.web.request.payment.PaymentApproveMessage;
+import com.wanted.clone.oneport.payments.presentation.web.request.payment.ReqPaymentApprove;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -49,7 +49,7 @@ public class PaymentController {
     }
 
     @PostMapping("confirm")
-    public String paymentApprove(@RequestBody PaymentApproveMessage message) {
+    public String paymentApprove(@RequestBody ReqPaymentApprove message) {
         log.info("message -> {}", message);
         return "toss/fail";
     }
