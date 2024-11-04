@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.function.Function;
+
 @Entity
 @Table(name = "payment_transaction")
 @Builder
@@ -42,6 +44,10 @@ public class PaymentLedger {
 
     public boolean isCancellableAmountGreaterThan(int cancellationAmount){
         return balanceAmount >= cancellationAmount;
+    }
+
+    public static PaymentLedger of(Function<Object, PaymentLedger> processor, Object message){
+        return processor.apply(message);
     }
 
 }
