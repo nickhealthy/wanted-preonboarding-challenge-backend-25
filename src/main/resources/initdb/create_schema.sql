@@ -36,12 +36,13 @@ CREATE TABLE `order_items`
     UNIQUE KEY (order_id, item_idx, product_id)
 );
 
-CREATE TABLE `payment_transaction`
+CREATE TABLE `payment_ledger`
 (
     `id`              INT                    NOT NULL COMMENT '거래 번호' AUTO_INCREMENT,
-    `payment_id`      VARCHAR(255)           NOT NULL COMMENT '거래 ID',
+    `tx_id`           VARCHAR(255)           NOT NULL COMMENT '거래 ID',
+    `pg_corp`         VARCHAR(10)            NOT NULL COMMENT 'PG사 정보',
     `method`          VARCHAR(255)           NOT NULL COMMENT '거래 수단',
-    `payment_status`  VARCHAR(255)           NOT NULL COMMENT '거래 상태',
+    `payment_status`  VARCHAR(255)           NOT NULL COMMENT '거래 상태; 결제 완료, 결제 취소, 부분 취소, 정산 완료',
     `total_amount`    INT                    NOT NULL COMMENT '최종 결제 금액(즉시 할인 금액 포함)',
     `balance_amount`  INT                    NOT NULL COMMENT '취소 가능한 금액(잔고)',
     `canceled_amount` INT                    NOT NULL COMMENT '취소된 총 금액',
@@ -49,20 +50,20 @@ CREATE TABLE `payment_transaction`
     `created_at`      DATETIME DEFAULT NOW() NOT NULL,
     `updated_at`      DATETIME DEFAULT NOW() NOT NUll,
     PRIMARY KEY (id),
-    UNIQUE KEY (id, payment_id, method, payment_status)
+    UNIQUE KEY (id, tx_id, method, payment_status)
 );
 
-CREATE TABLE `card_payment`
+CREATE TABLE `card_payment_ledger`
 (
-    `payment_key`     VARCHAR(255) NOT NULL COMMENT '결제번호(paymentKey)',
+    `tx_id`           VARCHAR(255) NOT NULL COMMENT '결제번호',
     `card_number`     VARCHAR(255) NOT NULL COMMENT '카드번호',
     `approve_no`      VARCHAR(10)  NOT NULL COMMENT '카드 승인 번호',
     `acquire_status`  VARCHAR(255) NOT NULL COMMENT '카드결제 매입 상태',
     `issuer_code`     VARCHAR(255) NULL COMMENT '카드 발급사 코드',
     `acquirer_code`   VARCHAR(255) NOT NULL COMMENT '카드 매입사 코드',
     `acquirer_status` VARCHAR(255) NOT NULL COMMENT '카드 결제의 상태',
-    PRIMARY KEY (payment_key),
-    UNIQUE KEY (payment_key, card_number, approve_no)
+    PRIMARY KEY (tx_id),
+    UNIQUE KEY (tx_id, card_number, approve_no)
 );
 
 CREATE TABLE `payment_settlements`
