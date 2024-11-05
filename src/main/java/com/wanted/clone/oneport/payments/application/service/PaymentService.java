@@ -28,7 +28,6 @@ public class PaymentService implements PaymentFullfillUseCase {
     private final Set<TransactionTypeRepository> transactionTypeRepositorySet;
     private final OrderRepository orderRepository;
     private final PaymentLedgerRepository paymentLedgerRepository;
-    private final OrderService orderService;
 
     private final Map<String, TransactionTypeRepository> transactionTypeRepositories = new HashMap<>();
     private final Map<String, PaymentAPIs> pgAPIs = new HashMap<>();
