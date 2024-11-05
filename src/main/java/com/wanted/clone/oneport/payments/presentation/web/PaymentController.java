@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RequestMapping("/payment")
 public class PaymentController {
-    private final PaymentCommonUseCase paymentCommonUseCase;
+    private final PgWidgetUseCase pgWidgetUseCase;
 
     @GetMapping("checkout")
     public String paymentCheckout(@RequestParam(value = "orderId") String orderId,
@@ -29,7 +29,7 @@ public class PaymentController {
         model.addAttribute("ordererPhoneNumber", ordererPhoneNumber);
         model.addAttribute("userId", userId);
         model.addAttribute("amount", amount);
-        return paymentCommonUseCase.renderPgUi(PaymentRequest.of(pgCorpName), "checkout");
+        return pgWidgetUseCase.renderPgUi(PaymentRequest.of(pgCorpName), "checkout");
     }
 
     @GetMapping("success")
@@ -39,13 +39,13 @@ public class PaymentController {
                                   @RequestParam(value = "amount") String amount,
                                   @RequestParam(value = "pgCorpName") String pgCorpName
     ) throws Exception {
-        return paymentCommonUseCase.renderPgUi(PaymentRequest.of(pgCorpName), "success");
+        return pgWidgetUseCase.renderPgUi(PaymentRequest.of(pgCorpName), "success");
     }
 
     @GetMapping("fail")
     public String paymentFail(@RequestParam(value = "message") String message,
                               @RequestParam(value = "message") String pgCorpName) throws Exception {
-        return paymentCommonUseCase.renderPgUi(PaymentRequest.of(pgCorpName), "fail");
+        return pgWidgetUseCase.renderPgUi(PaymentRequest.of(pgCorpName), "fail");
     }
 
     @PostMapping("confirm")

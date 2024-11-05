@@ -38,9 +38,10 @@ CREATE TABLE `order_items`
 
 CREATE TABLE `payment_ledger`
 (
-    `id`              INT                    NOT NULL COMMENT '거래 번호' AUTO_INCREMENT,
+    `id`              INT                    NOT NULL COMMENT '번호' AUTO_INCREMENT,
+    `site_code`       VARCHAR(255)           NOT NULL COMMENT 'Client ID',
     `tx_id`           VARCHAR(255)           NOT NULL COMMENT '거래 ID',
-    `pg_corp`         VARCHAR(10)            NOT NULL COMMENT 'PG사 정보',
+    `pg_corp`         TINYINT                NOT NULL COMMENT 'PG사 코드',
     `method`          VARCHAR(255)           NOT NULL COMMENT '거래 수단',
     `payment_status`  VARCHAR(255)           NOT NULL COMMENT '거래 상태; 결제 완료, 결제 취소, 부분 취소, 정산 완료',
     `total_amount`    INT                    NOT NULL COMMENT '최종 결제 금액(즉시 할인 금액 포함)',

@@ -1,7 +1,7 @@
 package com.wanted.clone.oneport.payments.domain.entity.payment.card;
 
 import com.wanted.clone.oneport.payments.domain.entity.payment.TransactionType;
-import com.wanted.clone.oneport.payments.infrastructure.pg.toss.response.ResponsePaymentApproved;
+import com.wanted.clone.oneport.payments.infrastructure.pg.toss.response.TossApproveResponseMessage;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -39,7 +39,7 @@ public class CardPayment extends TransactionType {
     protected CardPayment() {
     }
 
-    public static CardPayment from(ResponsePaymentApproved response) {
+    public static CardPayment from(TossApproveResponseMessage response) {
         return CardPayment.builder()
                 .paymentKey(response.getPaymentKey())
                 .cardNumber(response.getCard().getNumber())

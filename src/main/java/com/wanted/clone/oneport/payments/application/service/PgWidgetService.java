@@ -2,7 +2,7 @@ package com.wanted.clone.oneport.payments.application.service;
 
 import com.wanted.clone.oneport.payments.application.port.out.pg.PgWidget;
 import com.wanted.clone.oneport.payments.application.service.dto.PaymentRequest;
-import com.wanted.clone.oneport.payments.presentation.port.in.PaymentCommonUseCase;
+import com.wanted.clone.oneport.payments.presentation.port.in.PgWidgetUseCase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class PaymentCommonService implements PaymentCommonUseCase {
+public class PgWidgetService implements PgWidgetUseCase {
     private final Set<PgWidget> pgWidgets;
     private final Map<String, PgWidget> pgWidgetSelector = new HashMap<>();
 

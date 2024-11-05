@@ -7,7 +7,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder
 @NoArgsConstructor
-public class ResponsePaymentCommon {
+public class TossCommonResponseMessage {
     private String orderId;
     private String paymentKey;
     private String method;

@@ -1,10 +1,10 @@
 package com.wanted.clone.oneport.payments.infrastructure.pg.toss;
 
 import com.wanted.clone.oneport.payments.infrastructure.pg.toss.request.TossApproveMessage;
-import com.wanted.clone.oneport.payments.infrastructure.pg.toss.response.ResponsePaymentApproved;
-import com.wanted.clone.oneport.payments.infrastructure.pg.toss.response.ResponsePaymentCancel;
-import com.wanted.clone.oneport.payments.infrastructure.pg.toss.response.ResponsePaymentSettlements;
-import com.wanted.clone.oneport.payments.presentation.web.request.payment.PaymentCancelMessage;
+import com.wanted.clone.oneport.payments.infrastructure.pg.toss.request.TossCancelMessage;
+import com.wanted.clone.oneport.payments.infrastructure.pg.toss.response.TossApproveResponseMessage;
+import com.wanted.clone.oneport.payments.infrastructure.pg.toss.response.TossCancelResponseMessage;
+import com.wanted.clone.oneport.payments.infrastructure.pg.toss.response.TossSettlementsResponseMessage;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -15,14 +15,14 @@ import java.util.List;
 
 public interface TossPaymentAPIs {
     @POST("payments/confirm")
-    Call<ResponsePaymentApproved> paymentFullfill(@Body TossApproveMessage requestMessage);
+    Call<TossApproveResponseMessage> paymentFullfill(@Body TossApproveMessage requestMessage);
 
     @POST("payments/{paymentKey}/cancel")
-    Call<ResponsePaymentCancel> paymentCancel(@Path("paymentKey") String paymentKey, @Body PaymentCancelMessage requestMessage);
+    Call<TossCancelResponseMessage> paymentCancel(@Path("paymentKey") String paymentKey, @Body TossCancelMessage requestMessage);
 
     @GET("settlements")
-    Call<List<ResponsePaymentSettlements>> paymentSettlements(@Path("startDate") String startDate,
-                                                              @Path("endDate") String endDate,
-                                                              @Path("page") int page,
-                                                              @Path("size") int size);
+    Call<List<TossSettlementsResponseMessage>> paymentSettlements(@Path("startDate") String startDate,
+                                                                  @Path("endDate") String endDate,
+                                                                  @Path("page") int page,
+                                                                  @Path("size") int size);
 }

@@ -1,11 +1,13 @@
 package com.wanted.clone.oneport.payments.domain.entity.payment;
 
+import com.wanted.clone.oneport.payments.domain.entity.payment.converter.PaymentMethodConverter;
+import com.wanted.clone.oneport.payments.domain.entity.payment.converter.PaymentStatusConverter;
+import com.wanted.clone.oneport.payments.domain.entity.payment.converter.PgCorpConverter;
+import com.wanted.clone.oneport.payments.presentation.web.request.payment.PgCorp;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-
-import java.util.function.Function;
 
 @Entity
 @Table(name = "payment_transaction")
@@ -17,8 +19,16 @@ public class PaymentLedger {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "payment_id")
-    private String paymentKey; // example) tgen_20240605132741Jtkz1
+    @Column(name = "site_code")
+    private String siteCode;
+
+    // TODO: Add Converter
+    @Column(name = "pg_corp")
+    @Convert(converter = PgCorpConverter.class)
+    private PgCorp pgCorpName;
+
+    @Column(name = "tx_id")
+    private String transactionId; // example) tgen_20240605132741Jtkz1
 
     @Convert(converter = PaymentMethodConverter.class)
     private PaymentMethod method; // CARD:카드
@@ -44,10 +54,6 @@ public class PaymentLedger {
 
     public boolean isCancellableAmountGreaterThan(int cancellationAmount){
         return balanceAmount >= cancellationAmount;
-    }
-
-    public static PaymentLedger of(Function<Object, PaymentLedger> processor, Object message){
-        return processor.apply(message);
     }
 
 }

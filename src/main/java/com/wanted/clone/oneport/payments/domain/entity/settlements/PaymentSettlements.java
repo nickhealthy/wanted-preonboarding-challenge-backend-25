@@ -1,6 +1,8 @@
 package com.wanted.clone.oneport.payments.domain.entity.settlements;
 
 import com.wanted.clone.oneport.payments.domain.entity.payment.*;
+import com.wanted.clone.oneport.payments.domain.entity.payment.converter.PaymentMethodConverter;
+import com.wanted.clone.oneport.payments.domain.entity.payment.converter.PaymentStatusConverter;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -48,7 +50,7 @@ public class PaymentSettlements {
 
     public PaymentLedger toPaymentLedger() {
         return PaymentLedger.builder()
-            .paymentKey(paymentKey)
+            .transactionId(paymentKey)
             .method(method)
             .paymentStatus(paymentStatus)
             .totalAmount(totalAmount)

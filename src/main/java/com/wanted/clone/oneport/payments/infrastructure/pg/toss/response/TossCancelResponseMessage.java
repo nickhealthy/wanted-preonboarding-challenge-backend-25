@@ -5,7 +5,7 @@ import com.wanted.clone.oneport.payments.domain.entity.payment.PaymentLedger;
 import com.wanted.clone.oneport.payments.domain.entity.payment.PaymentMethod;
 import com.wanted.clone.oneport.payments.domain.entity.payment.PaymentStatus;
 import com.wanted.clone.oneport.payments.infrastructure.pg.toss.response.payment.Cancel;
-import com.wanted.clone.oneport.payments.infrastructure.pg.toss.response.payment.ResponsePaymentCommon;
+import com.wanted.clone.oneport.payments.infrastructure.pg.toss.response.payment.TossCommonResponseMessage;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -95,7 +95,7 @@ import java.util.List;
 @NoArgsConstructor
 @SuperBuilder
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ResponsePaymentCancel extends ResponsePaymentCommon {
+public class TossCancelResponseMessage extends TossCommonResponseMessage {
     private List<Cancel> cancels;
 
     private int calculateCanceledTotalAmount(){
@@ -107,7 +107,7 @@ public class ResponsePaymentCancel extends ResponsePaymentCommon {
         int canceledTotalAmount = calculateCanceledTotalAmount();
 
         return PaymentLedger.builder()
-            .paymentKey(super.getPaymentKey())
+            .transactionId(super.getPaymentKey())
             .method(PaymentMethod.fromMethodName(super.getMethod()))
             .paymentStatus(PaymentStatus.valueOf(super.getStatus()))
             .totalAmount(super.getTotalAmount())

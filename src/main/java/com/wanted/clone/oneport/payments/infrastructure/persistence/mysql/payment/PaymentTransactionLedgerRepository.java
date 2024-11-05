@@ -16,14 +16,14 @@ public class PaymentTransactionLedgerRepository implements PaymentLedgerReposito
     private final JpaPaymentLedgerRepository jpaPaymentLedgerRepository;
 
     @Override
-    public List<PaymentLedger> findAllByPaymentKey(String paymentKey) {
-        return jpaPaymentLedgerRepository.findByPaymentKey(paymentKey)
+    public List<PaymentLedger> findAllByTransactionId(String paymentKey) {
+        return jpaPaymentLedgerRepository.findByTransactionId(paymentKey)
             .orElseThrow(() -> new NullPointerException("findAllByPaymentKey ::: Not found Payment Transactions"));
     }
 
     @Override
-    public PaymentLedger findOneByPaymentKeyDesc(String paymentKey) {
-        return jpaPaymentLedgerRepository.findTopByPaymentKeyOrderByIdDesc(paymentKey)
+    public PaymentLedger findOneByTransactionIdDesc(String paymentKey) {
+        return jpaPaymentLedgerRepository.findTopByTransactionIdOrderByIdDesc(paymentKey)
             .orElseThrow(() -> new NullPointerException("findOneByPaymentKeyDesc ::: Not found Payment Transaction"));
     }
 
@@ -34,21 +34,23 @@ public class PaymentTransactionLedgerRepository implements PaymentLedgerReposito
 
     @Override
     public void bulkInsert(List<PaymentLedger> paymentLedgerHistories) {
-        String sqlStatement = "INSERT INTO payment_transaction (payment_id, method, payment_Status, total_amount, balance_amount, canceled_amount, pay_out_amount) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sqlStatement = "INSERT INTO payment_ledger (site_code, tx_id, pg_corp, method, payment_Status, total_amount, balance_amount, canceled_amount, pay_out_amount) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         jdbcTemplate.batchUpdate(
                 sqlStatement,
                 paymentLedgerHistories,
                 paymentLedgerHistories.size(),
                 (PreparedStatement ps, PaymentLedger data) -> {
-                    ps.setString(1, data.getPaymentKey());
-                    ps.setString(2, data.getMethod().toString());
-                    ps.setString(3, data.getPaymentStatus().toString());
-                    ps.setInt(4, data.getTotalAmount());
-                    ps.setInt(5, data.getBalanceAmount());
-                    ps.setInt(6, data.getCanceledAmount());
-                    ps.setInt(7, data.getPayOutAmount());
+                    ps.setString(1, data.getSiteCode());
+                    ps.setString(2, data.getTransactionId());
+                    ps.setInt(3, data.getPgCorpName().getCode());
+                    ps.setString(4, data.getMethod().toString());
+                    ps.setString(5, data.getPaymentStatus().toString());
+                    ps.setInt(6, data.getTotalAmount());
+                    ps.setInt(7, data.getBalanceAmount());
+                    ps.setInt(8, data.getCanceledAmount());
+                    ps.setInt(9, data.getPayOutAmount());
                 });
     }
 }

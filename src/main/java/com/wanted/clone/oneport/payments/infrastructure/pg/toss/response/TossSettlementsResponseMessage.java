@@ -18,7 +18,7 @@ import java.sql.Date;
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Slf4j
-public class ResponsePaymentSettlements {
+public class TossSettlementsResponseMessage {
     private String orderId;
     private String paymentKey;
     private String method;

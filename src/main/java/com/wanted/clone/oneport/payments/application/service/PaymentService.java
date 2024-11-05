@@ -6,7 +6,8 @@ import com.wanted.clone.oneport.payments.application.port.out.repository.Payment
 import com.wanted.clone.oneport.payments.application.port.out.repository.TransactionTypeRepository;
 import com.wanted.clone.oneport.payments.domain.entity.order.Order;
 import com.wanted.clone.oneport.payments.domain.entity.order.OrderStatus;
-import com.wanted.clone.oneport.payments.infrastructure.pg.toss.response.ResponsePaymentApproved;
+import com.wanted.clone.oneport.payments.domain.entity.payment.PaymentLedger;
+import com.wanted.clone.oneport.payments.infrastructure.pg.toss.response.TossApproveResponseMessage;
 import com.wanted.clone.oneport.payments.presentation.port.in.PaymentFullfillUseCase;
 import com.wanted.clone.oneport.payments.presentation.web.request.payment.PgCorp;
 import com.wanted.clone.oneport.payments.presentation.web.request.payment.ReqPaymentApprove;
@@ -27,6 +28,7 @@ public class PaymentService implements PaymentFullfillUseCase {
     private final Set<TransactionTypeRepository> transactionTypeRepositorySet;
     private final OrderRepository orderRepository;
     private final PaymentLedgerRepository paymentLedgerRepository;
+    private final OrderService orderService;
 
     private final Map<String, TransactionTypeRepository> transactionTypeRepositories = new HashMap<>();
     private final Map<String, PaymentAPIs> pgAPIs = new HashMap<>();
@@ -49,17 +51,21 @@ public class PaymentService implements PaymentFullfillUseCase {
     public String paymentApproved(ReqPaymentApprove requestMessage) throws IOException {
         verifyOrderIsCompleted(requestMessage.getOrderId());
         PaymentAPIs paymentAPIs = selectPgAPI(requestMessage.getSelectedPgCorp());
-        ResponsePaymentApproved response = paymentAPIs.requestPaymentApprove(requestMessage);
+        TossApproveResponseMessage response = paymentAPIs.requestPaymentApprove(requestMessage);
 
         if (paymentAPIs.isPaymentApproved(response.getStatus())) {
             Order completedOrder = orderRepository.findById(response.getOrderId());
             completedOrder.orderPaymentFullFill(response.getPaymentKey());
-            paymentLedgerRepository.save(response.toPaymentTransactionEntity());
+            paymentLedgerRepository.save(response.toEntity());
 
             return "success";
         }
 
         return "fail";
+    }
+
+    public PaymentLedger getLatestPaymentInfoOnlyOne(String paymentKey) {
+        return paymentLedgerRepository.findOneByTransactionIdDesc(paymentKey);
     }
 
     private void verifyOrderIsCompleted(String orderId) throws IllegalArgumentException {
@@ -68,11 +74,12 @@ public class PaymentService implements PaymentFullfillUseCase {
             throw new IllegalArgumentException("Order is not completed || Order is already paymented");
     }
 
-    private PaymentAPIs selectPgAPI(PgCorp pgCorp) {
+    public PaymentAPIs selectPgAPI(PgCorp pgCorp) {
         return switch (pgCorp.name().toUpperCase()) {
             case "TOSS" -> pgAPIs.get("TOSS");
             default -> throw new IllegalArgumentException("Invalid pgCorp name: " + pgCorp.name());
         };
     }
+
 
 }

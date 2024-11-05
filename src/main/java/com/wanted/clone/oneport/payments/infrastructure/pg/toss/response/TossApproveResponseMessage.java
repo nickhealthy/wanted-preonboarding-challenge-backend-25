@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.wanted.clone.oneport.payments.domain.entity.payment.PaymentLedger;
 import com.wanted.clone.oneport.payments.domain.entity.payment.PaymentMethod;
 import com.wanted.clone.oneport.payments.domain.entity.payment.PaymentStatus;
-import com.wanted.clone.oneport.payments.infrastructure.pg.toss.response.payment.ResponsePaymentCommon;
+import com.wanted.clone.oneport.payments.infrastructure.pg.toss.response.payment.TossCommonResponseMessage;
 import com.wanted.clone.oneport.payments.infrastructure.pg.toss.response.payment.method.Card;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -15,7 +15,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ResponsePaymentApproved extends ResponsePaymentCommon {
+public class TossApproveResponseMessage extends TossCommonResponseMessage {
     private String orderName;
     private Card card;
     private String lastTransactionKey;
@@ -24,9 +24,9 @@ public class ResponsePaymentApproved extends ResponsePaymentCommon {
     private String requestedAt; // 2024-06-18T15:13:15+09:00
     private String approvedAt;
 
-    public PaymentLedger toPaymentTransactionEntity() {
+    public PaymentLedger toEntity() {
         return PaymentLedger.builder()
-            .paymentKey(this.getPaymentKey())
+            .transactionId(this.getPaymentKey())
             .method(PaymentMethod.fromMethodName(this.getMethod()))
             .paymentStatus(PaymentStatus.valueOf(this.getStatus()))
             .totalAmount(this.getTotalAmount())
