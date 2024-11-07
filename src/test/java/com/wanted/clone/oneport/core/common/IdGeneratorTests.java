@@ -1,10 +1,12 @@
 package com.wanted.clone.oneport.core.common;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 
 import java.util.*;
 import java.util.concurrent.*;
 
+@Slf4j
 public class IdGeneratorTests {
     @Test
     public void generateId_NormalTest_True() {
@@ -23,7 +25,10 @@ public class IdGeneratorTests {
         for (int i = 0; i < threadCount; i++) {
             executorService.submit(() -> {
                 try {
-                    generatedIds.add(IdGenerator.generateId(14));
+                    String orderId = IdGenerator.generateId(14);
+                    log.info("Generated ID ::: {}", orderId);
+                    generatedIds.add(orderId);
+                    //generatedIds.add(IdGenerator.generateId(14));
                 } finally {
                     latch.countDown();
                 }
