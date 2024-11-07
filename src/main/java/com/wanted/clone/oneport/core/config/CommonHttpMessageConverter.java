@@ -36,6 +36,7 @@ public class CommonHttpMessageConverter extends AbstractHttpMessageConverter<Api
 
     @Override
     protected boolean supports(Class<?> clazz) {
+        log.info("1#Execute AbstractHttpMessageConverter - supports");
         return clazz.equals(ApiResponse.class) || clazz.isPrimitive() || clazz.equals(String.class);
     }
 
@@ -48,7 +49,7 @@ public class CommonHttpMessageConverter extends AbstractHttpMessageConverter<Api
     @Override
     protected void writeInternal(ApiResponse<Object> resultMessage, HttpOutputMessage outputMessage)
             throws IOException, HttpMessageNotWritableException {
-        log.info("execute AbstractHttpMessageConverter - writeInternal");
+        log.info("5#Execute AbstractHttpMessageConverter - writeInternal");
         String responseMessage = this.objectMapper.writeValueAsString(resultMessage);
         StreamUtils.copy(responseMessage.getBytes(StandardCharsets.UTF_8), outputMessage.getBody());
     }
