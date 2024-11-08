@@ -4,6 +4,7 @@ import com.wanted.clone.oneport.payments.application.port.out.pg.PaymentAPIs;
 import com.wanted.clone.oneport.payments.application.port.out.repository.OrderRepository;
 import com.wanted.clone.oneport.payments.application.port.out.repository.PaymentLedgerRepository;
 import com.wanted.clone.oneport.payments.application.port.out.repository.TransactionTypeRepository;
+import com.wanted.clone.oneport.payments.application.service.dto.PaymentApproveResponse;
 import com.wanted.clone.oneport.payments.domain.entity.order.Order;
 import com.wanted.clone.oneport.payments.domain.entity.order.OrderStatus;
 import com.wanted.clone.oneport.payments.domain.entity.payment.PaymentLedger;
@@ -50,11 +51,11 @@ public class PaymentService implements PaymentFullfillUseCase {
     public String paymentApproved(ReqPaymentApprove requestMessage) throws IOException {
         verifyOrderIsCompleted(requestMessage.getOrderId());
         PaymentAPIs paymentAPIs = selectPgAPI(requestMessage.getSelectedPgCorp());
-        TossApproveResponseMessage response = paymentAPIs.requestPaymentApprove(requestMessage);
+        PaymentApproveResponse response = paymentAPIs.requestPaymentApprove(requestMessage);
 
-        if (paymentAPIs.isPaymentApproved(response.getStatus())) {
+        if (paymentAPIs.isPaymentApproved(response.getStatus().name())) {
             Order completedOrder = orderRepository.findById(response.getOrderId());
-            completedOrder.orderPaymentFullFill(response.getPaymentKey());
+            completedOrder.orderPaymentFullFill(response.getTransactionId());
             paymentLedgerRepository.save(response.toEntity());
 
             return "success";

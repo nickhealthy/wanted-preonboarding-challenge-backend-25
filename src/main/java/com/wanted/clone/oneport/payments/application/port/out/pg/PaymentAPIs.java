@@ -1,6 +1,7 @@
 package com.wanted.clone.oneport.payments.application.port.out.pg;
 
-import com.wanted.clone.oneport.payments.infrastructure.pg.toss.response.TossApproveResponseMessage;
+import com.wanted.clone.oneport.payments.application.service.dto.PaymentApproveResponse;
+import com.wanted.clone.oneport.payments.domain.entity.payment.PaymentLedger;
 import com.wanted.clone.oneport.payments.infrastructure.pg.toss.response.TossCancelResponseMessage;
 import com.wanted.clone.oneport.payments.infrastructure.pg.toss.response.TossSettlementsResponseMessage;
 import com.wanted.clone.oneport.payments.presentation.web.request.order.ReqCancelOrder;
@@ -10,7 +11,7 @@ import java.io.IOException;
 import java.util.List;
 
 public interface PaymentAPIs {
-    TossApproveResponseMessage requestPaymentApprove(ReqPaymentApprove requestMessage) throws IOException;
+    PaymentApproveResponse requestPaymentApprove(ReqPaymentApprove requestMessage) throws IOException;
 
     boolean isPaymentApproved(String status);
 
